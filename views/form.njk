@@ -1,0 +1,28 @@
+{% extends "partials/layout.njk" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Form</h1>
+    <form>
+        <p>
+            <label> 
+                First name<br> </label>
+            <input type="text" placeholder="First Name" name="fname">
+            
+        </p>
+        <p>
+            <label> 
+                Last name<br></label>
+            <input type="text" placeholder="Last Name" name="lname"></input>
+            
+        </p>
+        <p>
+            <label> 
+                Age<br> </label>
+            <input type="number" min="0" max="150" step="1" placeholder="Age" name="age"></input>
+           
+        </p>
+        <p>
+            <input type="Submit" value="Send"></input>
+        </p>
+    </form>
+{% endblock %}
