@@ -8,3 +8,4 @@
 - `cd` enter folder
 - `cd .` exit folder
 - `git clone 'link' ` clone from github
+cd
