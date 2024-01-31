@@ -31,8 +31,11 @@ app.get('/circle', (req, res) => {
 });
 
 app.post('/circle', (req, res) => {
-  res.render('circleanswer.njk', {r: req.body.radius });
-});
+  let area = Math.PI * req.body.radius * req.body.radius;
+  let circumference = Math.PI * req.body.radius * 2;
+  let volume = Math.PI * req.body.radius * req.body.radius * req.body.radius * 4/3;
+  res.render('circleanswer.njk', ({r: req.body.radius, a: area, c: circumference, v: volume
+}))});
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
