@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt')
+const User = require
 
 const User = require('./models/User.js');
 
@@ -12,6 +14,6 @@ router.get('/register', async (req, res) => {
     if(req.body.passw0rd !== req.bodu.password_confirm || user){
         res.redirect('/register');
     } else {
-        
+
     }
 })
