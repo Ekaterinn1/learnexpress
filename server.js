@@ -2,6 +2,13 @@ const express = require('express');
 const nunjucks = require('nunjucks')
 const app = express();
 const port = 3000;
+const cookieParser = require('cookie-parser');
+app.use(express.cookieParser())
+
+const session = require('express-session');
+  app.use(session({
+    secret: 'secret'
+  }));
 
 app.use(express.urlencoded({
   extended:true
@@ -43,3 +50,11 @@ app.listen(port, () => {
 
 const movieController = require('./src/moviecontroller.js');
 app.use('/movies', movieController);
+
+app.get('cookie', (req, res) => {
+  res.cookie('myCookie', 'cool cookie', {maxAge: 1000*60*60*24*364*1000});
+  if(!res.session.ecrertValue){
+    res.session.secretValue = 'shhh'
+  }
+   res.send(req.cookies);
+  });

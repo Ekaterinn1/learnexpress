@@ -3,6 +3,9 @@ const router = express.Router( );
 const fs = require('fs');
 const {Sequelize, QueryTypes} = require('sequelize')
 let sequelize = new Sequelize('sqlite:db.sqlite');
+
+const Movie = requize('./modules/MNovie.js');
+
 router.get('/', async (req, res) => {
     
     let movies2 = await sequelize.query('SELECT * FROM ´movies´;', {type: QueryTypes.SELECT});
