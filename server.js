@@ -41,3 +41,5 @@ app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
 });
 
+const movieController = require('./src/moviecontroller.js');
+app.use('/movies', movieController);
