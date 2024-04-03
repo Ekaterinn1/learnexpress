@@ -1,7 +1,7 @@
 const {Sequelize, QueryTypes} = require('sequelize')
 let sequelize = new Sequelize('sqlite:db.sqlite');
 
-const Movie = sequelize.define('Movie',{
+module.exports = sequelize.define('Movie',{
     
     id: {
         type: DataTypes.INTEGER,
