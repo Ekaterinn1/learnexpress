@@ -1,4 +1,3 @@
-
 const express = require('express');
 const nunjucks = require('nunjucks');
 const app = express();
@@ -7,25 +6,30 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 const session = require('express-session');
-
-  var FileStore = require('session-require-store') (session);
-  app.use(session({
+const FileStore = require('session-file-store')(session);
+app.use(session({
   store: new FileStore(),
   secret: 'secret',
   resave: false,
-  saveUnitialized: false,
+  saveUninitialized: false,
 }));
 
 app.use(express.urlencoded({
   extended:true
 }));
 
-nunjucks.configure('views', {
+const env = nunjucks.configure('views', {
     autoescape: true,
     express: app
 });
 
+app.use((req, res, next) => {
+  env.addGlobal('user', req.session.user);
+  next();
+});
+
 app.get('/', (req, res) => {
+  console.log(req.session.user);
   res.render('index.njk');
 });
 
@@ -46,6 +50,7 @@ app.post('/circle', (req, res) => {
     let area = Math.PI * req.body.radius * req.body.radius;
     res.render('circleAnswer.njk', {r: req.body.radius, a: area});
 });
+
 const movieController = require('./src/movieController.js');
 app.use('/movies', movieController);
 

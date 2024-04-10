@@ -24,8 +24,23 @@ router.post('/register', async (req, res) => {
         res.redirect('/');
     }
 });
-
-
+let errors = [];
+if(req.body.password !== req.body.password_confirm){
+    errors.push("passwords don't match");
+}
+if(user){
+    errors.push("There is user with this email");
+if(errors.length){
+    res.redirect('/register');
+} else {
+    User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 12)
+    });
+    res.redirect('/')
+}
+};
 router.get('/login', async (req,res) => {
     res.render('auth/login.njk');
 })

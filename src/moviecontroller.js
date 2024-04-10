@@ -4,8 +4,15 @@ const fs = require('fs');
 const {Sequelize, QueryTypes} = require('sequelize')
 let sequelize = new Sequelize('sqlite:db.sqlite');
 
-const Movie = requize('./modules/MNovie.js');
+const Movie = requize('./modules/Movie.js');
 
+router.use((req, res, next) => {
+    if(req.session.user){
+        next();
+    } else {
+        res.redirect('/login');
+    }
+});
 router.get('/', async (req, res) => {
     
     let movies2 = await sequelize.query('SELECT * FROM ´movies´;', {type: QueryTypes.SELECT});
