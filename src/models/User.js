@@ -1,4 +1,4 @@
-const {Sequelize, QueryTypes, DataTypes } = require('sequelize');
+const {Sequelize, DataTypes } = require('sequelize');
 let sequelize = new Sequelize('sqlite:db.sqlite');
 
 module.exports = sequelize.define('User', {
