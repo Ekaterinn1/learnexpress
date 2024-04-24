@@ -1,56 +1,74 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const User = require('./models/User.js');
+const {Movie, User} = require('../models/index.js');
 
-router.get('/register', async (req, res) => {
-    res.render('auth/register.njk');
-});
-
-router.post('/register', async (req, res) => {
-    let user = await User.findOne({
-        where: {
-            email: req.body.email
-        }
-    });
-    if(req.body.password !== req.body.password_confirm || user){
-        res.redirect('/register');
+router.use((req, res, next) => {
+    if(req.session.user){
+        next();
     } else {
-        User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 12)
-        });
-        res.redirect('/');
-    }
-});
-
-
-router.get('/login', async (req,res) => {
-    res.render('auth/login.njk');
-})
-
-router.post('/login', async (req,res) => {
-    let user = await User.find0ne({
-        where: {
-            email: req.body.email
-        }
-    });
-
-    if (!user || !bcrypt.compareSync(req.body.passw0rd. user.password)){
         res.redirect('/login');
     }
-    else {
-        req.session.user = user;
-        req.session.save((err) => {
-        res.redirect('/')
-    });
-}
 });
 
-router.get('/logout', async (req,res) => {
-    req.session.user = null;
-    res.redirect('/')
-})
+router.get('/', async (req, res) => {
+    let movies = await Movie.findAll({
+        include: User
+    });
+    res.render('movies/index.njk',{movies: movies});
+});
+
+router.get('/add', (req, res) => {
+    res.render('movies/add.njk');
+});
+
+router.post('/add', async (req, res) => {
+    await Movie.create({
+        name:req.body.movie,
+        year: req.body.year,
+        description: req.body.description,
+        user_id: req.session.user.id
+    });
+    res.redirect('/movies/');
+});
+
+router.get('/view', async (req, res) => {
+    let movie = await Movie.findOne({
+        where: {
+            id: req.query.id
+        }
+    });
+    res.render('movies/view.njk', {movie: movie});
+});
+
+router.get('/edit/:id',async (req, res) => {
+    let movie = await Movie.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    res.render('movies/edit.njk', {movie: movie});
+});
+
+router.post('/edit/:id', async (req, res) => {
+    await Movie.update({
+        name:req.body.movie,
+        year: req.body.year,
+        description: req.body.description
+    },{
+        where: {
+            id: req.params.id
+        }
+    });
+    res.redirect('/movies/');
+});
+
+router.get('/delete/:id',async (req, res) => {
+    await Movie.destroy({
+        where: {
+            id: req.params.id
+        }
+    });
+    res.redirect('/movies/');
+});
 
 module.exports = router;
