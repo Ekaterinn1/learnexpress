@@ -34,8 +34,7 @@ router.post('/register', async (req, res) => {
         res.redirect('/');
     }
 });
-
-router.get('/login', async (req, res) => {
+router.get('/login', async (req,res) => {
     res.render('auth/login.njk');
 });
 

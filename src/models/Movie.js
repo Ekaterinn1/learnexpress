@@ -20,5 +20,4 @@ module.exports = sequelize.define('Movie',{
         type: DataTypes.TEXT, 
        
     }
-    
 },{ tableName: 'Movies', timestamps:false});
