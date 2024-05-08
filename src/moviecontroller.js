@@ -4,7 +4,6 @@ const fs = require('fs');
 const {Sequelize, QueryTypes, DataTypes } = require('sequelize');
 let sequelize = new Sequelize('sqlite:db.sqlite');
 
-<<<<<<< HEAD
 const Movie = require('./models/Movie.js');
 const User = require('./models/User.js');
 
@@ -15,9 +14,6 @@ router.use((req, res, next) => {
         res.redirect('/login');
     }
 });
-=======
-const Movie = requize('./modules/Movie.js');
->>>>>>> 6560764b26524d012cd24b1e317bf6e34e10143d
 
 router.use((req, res, next) => {
     if(req.session.user){
