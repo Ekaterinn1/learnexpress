@@ -33,6 +33,7 @@ router.get('/add', (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
+    console.log(req.files);
     await Movie.create({
         name:req.body.movie,
         year: req.body.year,

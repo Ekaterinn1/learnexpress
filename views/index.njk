@@ -2,6 +2,8 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 
+{% include "partials/pagination.njk" %}
+
 <div class="row">
     {% for movie in movies%}
     <div class="col-3 mb-2">
