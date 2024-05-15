@@ -8,6 +8,8 @@ const {Movie, User} = require('./models/index.js');
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
+app.use(express.static('public'))
+
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 app.use(session({
